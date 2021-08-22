@@ -4,12 +4,24 @@ from django.http import  HttpResponse,JsonResponse
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 import requests
+from requests.api import request
 
 
 
-# bot = ChatBot('vivebot',read_only = False, logic_adapters= ['chatterbot.logic.BestMatch'])
+bot = ChatBot('vivebot',read_only = False, logic_adapters= ['chatterbot.logic.BestMatch'])
+list_traiiner = ListTrainer(bot)
 
-
+list_of_responses =[
+    "What is your name?",
+    "I am a chat bot",
+    "What is your age?",
+    "I am lifeless",
+    "what do you do for living?",
+    "I develop applicatioons",
+    "you are a?",
+    "I am a Mechanical engineer"
+]
+list_traiiner.train(list_of_responses)
 
 
 # Create your views here.
@@ -18,8 +30,17 @@ def home(request):
     return render(request, "myapp/index.html")
 
 def getResponse(request):
+    
     userMessage = request.GET.get('userMessage')
-    return HttpResponse(userMessage)
+    response = bot.get_response(userMessage)
+    return HttpResponse(response)
+
+def getNews(request):
+    return HttpResponse("It's under development yet!")
+
+
+
+
 
 def getWeather(request):
     lat_ = request.GET.get('lat')
@@ -41,9 +62,3 @@ def getWeather(request):
 
 
 
-
-# def blog(request):
-#     return  HttpResponse("this is my blog url")
-#
-# def article(request, article_id):
-#     return  HttpResponse(article_id)

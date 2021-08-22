@@ -34,12 +34,21 @@ function getWeather(){
     
     $.get('/myapp/getWeather',{lat:lat, long:long}).done(function(data){
         var returnedMessage = "<p class='botText'>Bot: <span>"+ data.name +", "+ data.sys.country +"</span></p>"+
-                                "<p class='botText'> Temperature: <span>"+data.main.temp +"C </span></p>"+
+                                "<p class='botText'> Temperature: <span>"+data.main.temp +"°C </span></p>"+
                                 "<p class='botText'> Condition: <span>"+data.weather[0].description +" </span></p>";
         $('#chatbot').append(returnedMessage)
     })
 })
 }
+
+
+function getNews(){
+    $.get('/myapp/getNews').done(function(data){
+        var returnedMessage = "<p class='botText'>Bot: <span>"+ data + "</span></p>";
+        $('#chatbot').append(returnedMessage)
+    })
+}
+
 
 function assistantResponse(messageText){
     if (messageText =="1"){ 
@@ -47,7 +56,7 @@ function assistantResponse(messageText){
     }else if (messageText =="2"){
         getNews();
     }else{
-        alert("Chat")
+        getUserResponse(messageText);
     }
 }
 
@@ -77,13 +86,13 @@ function sendMessage(messageText){
 }
 
 
-function getUserResponse(){
-    var userText = $('#textInput').val();
-    var userHTML = "<p class='userText'>User: <span>"+ userText+"</span></p>";
-    $('#textInput').val("");
-    $('#chatbot').append(userHTML)
+function getUserResponse(messageText){
+    // var userText = $('#textInput').val();
+    // var userHTML = "<p class='userText'>User: <span>"+ userText+"</span></p>";
+    // $('#textInput').val("");
+    // $('#chatbot').append(userHTML)
     
-    $.get('/myapp/getResponse',{userMessage:userText}).done(function(data){
+    $.get('/myapp/getResponse',{userMessage:messageText}).done(function(data){
         var returnedMessage = "<p class='botText'>Bot: <span>"+ data+"</span></p>";
         $('#chatbot').append(returnedMessage)
     })

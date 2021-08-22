@@ -5,6 +5,7 @@ urlpatterns =[
     path("", views.home, name="home"),
     path("getResponse", views.getResponse, name="getResponse"),
     path("getWeather", views.getWeather, name="getWeather"),
+    path("getNews", views.getNews, name="getNews"),
     # path('blog/', views.blog, name = "blog"),
     # path('article/<int:article_id>', views.article, name ="article"),
 ]
